@@ -1,7 +1,6 @@
 def sort_names
-  file = File.open(File.dirname(__FILE__) + '/p022_names.txt')
-  names = file.read.gsub(/\w+/) # reads file and uses regex to to replace backslashes from string
-  names.sort # sort names alphabetically into an array
+  File.open(File.dirname(__FILE__) + '/p022_names.txt').read.gsub(/\w+/).sort
+  # reads file and uses regex to to replace backslashes from string and sorts alphbetically
 end
 
 def name_score(name, index)
@@ -17,7 +16,6 @@ def total_score
     @map[letter] = index + 1
     # returns total score for each name
   end
-  puts @map
   names = sort_names
   scores = []
   names.each_with_index do |name, index|
@@ -26,4 +24,5 @@ def total_score
   scores.inject { |sum, n| sum + n }
 end
 
-puts total_score # total score = 871198282
+puts "The total of all the name scores in the file is #{total_score}" # total score = 871198282
+
