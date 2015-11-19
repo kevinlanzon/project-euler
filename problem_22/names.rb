@@ -13,3 +13,11 @@ def letter_value
   end
   puts @map # method return a hash of key, value pairs for letters {"A"=>1, "B"=>2 etc...}
 end
+
+def name_score(name, index)
+  score = name.each_char.inject(0) do |sum, char|
+    sum + @map[char]
+  end
+  score * index
+  puts score # returns the total score for each name in the txt file
+end
