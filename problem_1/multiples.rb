@@ -1,0 +1,4 @@
+
+
+
+multiples = Multiples.new(number)
