@@ -13,11 +13,10 @@ class Multiples
   end
 
   def sum_of_all_multiples
-    num = of_three_and_five
-    num.inject(:+)
+    of_three_and_five.inject(:+)
   end
 end
 
 calc = Multiples.new(1000)
 
-puts calc.sum_of_all_multiples
+puts calc.sum_of_all_multiples # = 233168
