@@ -1,27 +1,43 @@
-def sort_names
-  File.open(File.dirname(__FILE__) + '/p022_names.txt').read.gsub(/\w+/).sort
-  # reads file and uses regex to to replace backslashes from string and sorts alphbetically into array
+class NameCalc
+
+  def initialize(filename)
+    @names = File.read(filename).scan(/[\w]+/).sort
+  end
+
+  def find_value_of_all_names
+    @names.map { |name| find_value_of name }.inject(&:+)
+  end
+
+  def find_value_of(name)
+    letter_value_of(name) * pos_value_of(name)
+  end
+
+  def letter_value_of(name)
+    name.split("").map { |letter| alphabet[letter] }.inject(&:+)
+  end
+
+  def pos_value_of(name)
+    @names.find_index(name) + 1
+  end
+
+  def alphabet
+    @alphabet ||= ('A'..'Z').to_a.zip((1..26).to_a).to_h
+  end
 end
 
-def name_score(name, index)
-  score = name.each_char.inject(0) do |sum, char| # each_char passes each character in the string to the given block
-    sum + @map[char]
-  end
-  score * index
-  # returns total score for each name
-end
 
-def total_score
-  @map = {}
-  ('A'..'Z').each_with_index do |letter, value| # each_with_index calls block with two arguments, the item and its index.
-    @map[letter] = value + 1
-  end
-  names = sort_names
-  scores = []
-  names.each_with_index do |name, index|
-    scores << name_score(name, index + 1)
-  end
-  scores.inject(:+) # inject method sums all the names scores
-end
+# Instantiate the object
 
-puts "The total of all the name scores in the file is #{total_score}" # total score = 871198282
+calc = NameCalc.new("names.txt")
+
+
+# In the problem, it says COLIN should equal 49714
+
+colin = calc.find_value_of("COLIN")
+
+raise "Colin fails with #{colin}" unless colin == 49714
+
+
+# Find the total
+
+puts "The total is #{calc.find_value_of_all_names}"
